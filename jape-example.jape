@@ -1,0 +1,47 @@
+Phase: EMail
+Input: Token SpaceToken 
+Options: control = appelt
+
+Macro: WORD_OR_NUMBER
+(
+    ({Token.kind == word}|{Token.kind == number})
+)
+
+
+Rule: emailaddress
+Priority: 50
+(
+   (WORD_OR_NUMBER)+
+   ({Token.string == "."}(WORD_OR_NUMBER)+)*
+   {Token.string == "@"}
+   (WORD_OR_NUMBER)+
+   ({Token.string == "."}(WORD_OR_NUMBER)+)*
+)
+:email -->
+   :email.EMail= {rule = "emailaddress"}
+
+
+Rule: phonenumber
+Priority: 100
+(
+    (
+    ({Token.string == "+"})?
+        ({Token.length==12, Token.kind == number} | 
+            (({Token.length==3, Token.kind == number}
+                {SpaceToken}
+             )[3]
+             {Token.length==3, Token.kind == number}
+            )
+        )
+    ) | (
+        {Token.length==4, Token.kind==number}
+        ({SpaceToken}{Token.length==3, Token.kind==number})[2]
+    ) | (
+        {Token.length==3, Token.kind==number}
+        ({SpaceToken}{Token.length==2, Token.kind==number})[2]
+    ) | (
+        {Token.length==9, Token.kind==number}
+    )
+)
+:phone -->
+    :phone.Phone= {rule = "phonenumber"}
