@@ -1,0 +1,4 @@
+\beamer@endinputifotherversion {3.33pt}
+\select@language {slovak}
+\beamer@sectionintoc {1}{Funk\IeC {\v c}nos\IeC {\v t}}{2}{0}{1}
+\beamer@sectionintoc {2}{Rozhranie}{2}{0}{2}
